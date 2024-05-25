@@ -1,8 +1,13 @@
 spring:
   application:
     name: exchange-service
-server:
-  port: 8085
+  jpa:
+    hibernate:
+      ddl-auto: update
+  security:
+    user:
+      name: user
+      password: password
 logging:
   file:
     name: /home/usrfc/mth-applications-dev/biller/log/mbexchangeservice.log
