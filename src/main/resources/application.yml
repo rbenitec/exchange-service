@@ -1,0 +1,21 @@
+spring:
+  application:
+    name: exchange-service
+server:
+  port: 8085
+logging:
+  file:
+    name: /home/usrfc/mth-applications-dev/biller/log/mbexchangeservice.log
+  level:
+    root: ERROR
+    org:
+      springframework: ERROR
+      hibernate: ERROR
+      springframework.boot.web.embedded.tomcat: INFO
+    com:
+      mibanco:
+        rbenitez:
+          mbexchangeservice: DEBUG
+  pattern:
+    console: "%d{dd-MM-yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n"
