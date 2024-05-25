@@ -1,5 +1,6 @@
 package com.mibanco.rbenitez.mbexchangeservice.controller;
 
+import com.mibanco.rbenitez.mbexchangeservice.dto.ExchangeRateDto;
 import com.mibanco.rbenitez.mbexchangeservice.dto.ExchangeRateRequestDto;
 import com.mibanco.rbenitez.mbexchangeservice.dto.ExchangeRateResponseDto;
 import com.mibanco.rbenitez.mbexchangeservice.entities.Exchange;
@@ -30,10 +31,23 @@ public class ExchangeRateController {
         return exchangeRateService.getAllExchange();
     }
 
+
     @PostMapping("/apply")
     public Mono<ResponseEntity<ExchangeRateResponseDto>> applyExchangeRate(@Valid @RequestBody ExchangeRateRequestDto exchangeRateRequestDto){
         validateExchangeRequest(exchangeRateRequestDto);
         return exchangeRateService.applyExchangeRate(exchangeRateRequestDto)
+                .map(ResponseEntity.status(HttpStatus.OK)::body)
+                .defaultIfEmpty(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
+    }
+
+    @PostMapping("/register")
+    public Mono<ResponseEntity<Exchange>> registerChanges(@Valid @RequestBody ExchangeRateDto exchangeRateDto){
+        Exchange exchange =  Exchange.builder()
+                .origin(exchangeRateDto.getOrigin())
+                .destine(exchangeRateDto.getDestine())
+                .rate(exchangeRateDto.getRate())
+                .build();
+        return exchangeRateService.saveExchange(exchange)
                 .map(ResponseEntity.status(HttpStatus.OK)::body)
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build());
     }

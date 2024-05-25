@@ -9,4 +9,5 @@ import reactor.core.publisher.Mono;
 public interface ExchangeRateService  {
     Flux<Exchange> getAllExchange();
     Mono<ExchangeRateResponseDto> applyExchangeRate(ExchangeRateRequestDto exchangeRateRequestDto);
+    Mono<Exchange> saveExchange(Exchange exchange);
 }
